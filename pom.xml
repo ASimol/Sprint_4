@@ -40,11 +40,5 @@
             <artifactId>selenium-support</artifactId>
             <version>4.5.3</version>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
