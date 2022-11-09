@@ -51,8 +51,8 @@ public class FirstPageOrder {
     //Локатор кнопки Хотите фоормить заказ?
     private By agreementButton = By.xpath(".//button[contains(@class, 'Button_Middle__1CSJM') and (text()= 'Да')]");
 
-    // локатор для cообщения об успешном создании заказа
-    private By textMessage = By.xpath(".//button[contains(@class, 'Button_Middle__1CSJM') and (text()= 'Посмотреть статус')]");
+    //Локатор cообщения Заказ оформлен
+    private By textMessage = By.xpath(".//div[@class='Order_ModalHeader__3FDaJ']");
 
     public FirstPageOrder(WebDriver driver){
         this.driver = driver;
@@ -110,7 +110,9 @@ public class FirstPageOrder {
         driver.findElement(agreementButton).click();
     }
     //Метод проверки появился ли заказ - есть ли статус заказа
-    public void orderCreationSuccessful() {driver.findElement(textMessage);}
+    public void orderCreationSuccessful(String textOrderPlaced) {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.textToBePresentInElementLocated(textMessage, textOrderPlaced));
 
     // метод заполнения полей на первой странице
     public void fillInFirstForm(String userName, String userSurname, String userAddress, String metroStations,

@@ -17,7 +17,7 @@ public class OrderSamokatWithDownButton {
 
     private WebDriver driver;
 
-    private final String textExpected = "Заказ оформлен";
+    private final String textOrderPlaced = "Заказ оформлен";
 
     @Test
     // тест заказа через нижнию кнопку в FireFox (Успешный)
@@ -36,7 +36,7 @@ public class OrderSamokatWithDownButton {
         FirstPageOrder objOrderPage = new FirstPageOrder(driver);
         objOrderPage.fillInFirstForm("Иван", "Иванкович", "Нижегородская, 1", "Черкизовская", "89101234567");
         objOrderPage.fillInSecondForm("03.11.2022", "Жду свой самокат!");
-        objOrderPage.orderCreationSuccessful();
+        objOrderPage.orderCreationSuccessful(textOrderPlaced);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class OrderSamokatWithDownButton {
         FirstPageOrder objOrderPage = new FirstPageOrder(driver);
         objOrderPage.fillInFirstForm("Иван", "Иванкович", "Нижегородская, 1", "Черкизовская", "89101234567");
         objOrderPage.fillInSecondForm("03.11.2022", "Жду свой самокат!");
-        objOrderPage.orderCreationSuccessful();
+        objOrderPage.orderCreationSuccessful(textOrderPlaced);
     }
     @After
     public void teardown() {

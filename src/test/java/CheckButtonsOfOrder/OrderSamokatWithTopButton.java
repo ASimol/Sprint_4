@@ -15,6 +15,7 @@ import java.io.File;
 
 public class OrderSamokatWithTopButton {
     private WebDriver driver;
+    private final String textOrderPlaced = "Заказ оформлен";
     @Test
     // тест заказа через кнопку сверху в FireFox (Успешный)
     public void orderWithTopButtonInFireFox() {
@@ -32,7 +33,7 @@ public class OrderSamokatWithTopButton {
         FirstPageOrder objPageOrder = new FirstPageOrder(driver);
         objPageOrder.fillInFirstForm("Петр","Петров", "Родионова, 23", "Измайлово", "89990002233");
         objPageOrder.fillInSecondForm("04.11.2022","Хочу кататься");
-        objPageOrder.orderCreationSuccessful();}
+        objPageOrder.orderCreationSuccessful(textOrderPlaced);}
 
     @Test
     // тест заказа через кнопку сверху в Google Chrome (Баг!)
@@ -49,7 +50,7 @@ public class OrderSamokatWithTopButton {
         FirstPageOrder objPageOrder = new FirstPageOrder(driver);
         objPageOrder.fillInFirstForm("Петр","Петров", "Родионова, 23", "Измайлово", "89990002233");
         objPageOrder.fillInSecondForm("04.11.2022","Хочу кататься");
-        objPageOrder.orderCreationSuccessful();}
+        objPageOrder.orderCreationSuccessful(textOrderPlaced);}
 
     @After
     public void teardown() {

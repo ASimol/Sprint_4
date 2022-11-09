@@ -10,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import pageobject.MainPageSamokat;
 
+@RunWith(Parameterized.class)
 public class CheckQuestion {
     public CheckQuestion(int number, String message) {
         this.number = number;
@@ -41,10 +42,6 @@ public class CheckQuestion {
     private WebDriver driver;
     @Test
     public void checkClickedOpensText() {
-        // драйвер для браузера Chrome
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments();
-        driver = new ChromeDriver(options);
         MainPageSamokat objMainPage = new MainPageSamokat(driver);
         objMainPage.open();
         objMainPage.scrollQuestionsImportant();
