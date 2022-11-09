@@ -1,122 +1,83 @@
 package PageObject;
 
-import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 
 public class MainPageSamokat {
     private WebDriver driver;
     private final String url = "https://qa-scooter.praktikum-services.ru/";
 
-    ///Кнопка заказа вверху страницы
+    //Кнопка заказа вверху страницы
     private By topButton = By.xpath(".//button[@class='Button_Button__ra12g']");
 
-    ///Кнопка Cookie
+    //Кнопка Cookie
     private By cookieButton = By.xpath(".//button[@class='App_CookieButton__3cvqF']");
 
-    ///Кнопка заказа внизу страницы
+    // локатор для элемента 'вопросы о важном'
+    private By questionsImportant = By.xpath(".//div[text()='Вопросы о важном']");
+
+    // локатор для элемента аккордеона
+    private By elementAccordion;
+
+    //локатор для текста элемента аккордеона
+    private By elementTextAccordion;
+
+    //Кнопка заказа внизу страницы
     private By downButton = By.xpath(".//button[contains(@class, 'Button_Button__ra12g Button_Middle__1CSJM') and (text()='Заказать')]");
 
-    ///Первый вопрос
-    private By questionFirst = By.id("accordion__heading-0");
-    ///Первый ответ
-    private By answerFirst = By.id("accordion__panel-0");
-
-    ///Второй вопрос
-    private By questionTwo = By.id("accordion__heading-1");
-    ///Второй ответ
-    private By answerTwo = By.id("accordion__panel-1");
-
-    ///Третий вопрос
-    private By questionThree = By.id("accordion__heading-2");
-    ///Третий ответ
-    private By answerThree = By.id("accordion__panel-2");
-
-    ///Четвертый вопрос
-    private By questionFour = By.id("accordion__heading-3");
-    ///Четвертый ответ
-    private By answerFour = By.id("accordion__panel-3");
-
-    ///Пятый вопрос
-    private By questionFive = By.id("accordion__heading-4");
-    ///Пятый ответ
-    private By answerFive = By.id("accordion__panel-4");
-
-    ///Шестой вопрос
-    private By questionSix = By.id("accordion__heading-5");
-    ///Шестой ответ
-    private By answerSix = By.id("accordion__panel-5");
-
-    ///Седьмой вопрос
-    private By questionSeven = By.id("accordion__heading-6");
-    ///Седьмой ответ
-    private By answerSeven = By.id("accordion__panel-6");
-
-    ///Восьмой вопрос
-    private By questionEight = By.id("accordion__heading-7");
-    ///Восьмой ответ
-    private By answerEight = By.id("accordion__panel-7");
-
-    public MainPageSamokat(WebDriver driver){
+    // конструктор класса
+    public MainPageSamokat(WebDriver driver) {
         this.driver = driver;
     }
 
+    //метод для перехода на тестовую страницу
     public void open() {
         driver.get(url);
     }
+    //метод прокрутки до элемента Вопросы о важном
+    public void scrollQuestionsImportant() {
+        WebElement element = driver.findElement(questionsImportant);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+    }
+    //метод нажатия на стрелочку элемента аккордеона
+    public void clickAccordionArrow(int number) {
+        if (number >= 1) {
+            elementAccordion = By.id("accordion__heading-" + (number - 1));
+        }
+        driver.findElement(elementAccordion).click();
+    }
+    //метод проверки появления текста
+    public void waitTextAppear(String textAccordion, int number) {
+        if (number >= 1) {
+            elementTextAccordion = By.id("accordion__panel-" + (number - 1));
+        }
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.textToBePresentInElementLocated(elementTextAccordion, textAccordion));
+    }
 
+    //метод для нажатия на кнопку сверху заказать
     public void clickTopButton() {
         driver.findElement(topButton).click();
     }
-
+    //метод для нажатия на кнопку cookie
     public void clickCookieButton() {
         driver.findElement(cookieButton).click();
     }
+    //метод для нажатия на нижнию кнопку заказать
     public void clickDownButton() {
         clickCookieButton();
         driver.findElement(downButton).click();
     }
-
-    public void checkAnswerToQuestionFirst() {
-        driver.findElement(questionFirst).sendKeys(Keys.RETURN);;
-        Assert.assertTrue("Вопрос №1- нет ответа", driver.findElement(answerFirst).isDisplayed());
-
-    }
-
-    public void checkAnswerToQuestionTwo() {
-        driver.findElement(questionTwo).sendKeys(Keys.RETURN);
-        Assert.assertTrue("Вопрос №2- нет ответа", driver.findElement(answerTwo).isDisplayed());
-    }
-
-    public void checkAnswerToQuestionThree() {
-        driver.findElement(questionThree).sendKeys(Keys.RETURN);
-        Assert.assertTrue("Вопрос №3- нет ответа", driver.findElement(answerThree).isDisplayed());
-    }
-
-    public void checkAnswerToQuestionFour() {
-        driver.findElement(questionFour).sendKeys(Keys.RETURN);
-        Assert.assertTrue("Вопрос №4- нет ответа", driver.findElement(answerFour).isDisplayed());
-    }
-
-    public void checkAnswerToQuestionFive() {
-        driver.findElement(questionFive).sendKeys(Keys.RETURN);
-        Assert.assertTrue("Вопрос №5- нет ответа", driver.findElement(answerFive).isDisplayed());
-    }
-
-    public void checkAnswerToQuestionSix() {
-        driver.findElement(questionSix).sendKeys(Keys.RETURN);
-        Assert.assertTrue("Вопрос №6- нет ответа", driver.findElement(answerSix).isDisplayed());
-    }
-
-    public void checkAnswerToQuestionSeven() {
-        driver.findElement(questionSeven).sendKeys(Keys.RETURN);
-        Assert.assertTrue("Вопрос №7- нет ответа", driver.findElement(answerSeven).isDisplayed());
-    }
-
-    public void checkAnswerToQuestionEight() {
-        driver.findElement(questionEight).sendKeys(Keys.RETURN);
-        Assert.assertTrue("Вопрос №8- нет ответа", driver.findElement(answerEight).isDisplayed());
+    // метод для прокрутки до нижней кнопки заказать
+    public void scrollDownButton() {
+        WebElement element = driver.findElement(downButton);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
     }
 }
